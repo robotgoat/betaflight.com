@@ -1,52 +1,61 @@
-name: Builds and Deploys the master branch
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - master
+      - docusaurusv3
+    # Review gh actions docs if you want to further define triggers, paths, etc
+    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
+  workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+defaults:
+  run:
+    shell: bash
+    
 jobs:
   build:
+    name: Build Docusaurus
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
 
-    - name: Setup node
-      uses: actions/setup-node@v4
-      with:
-        node-version: 18
-        cache: npm
-        cache-dependency-path: ./package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Build website
+        run: npm run build
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Upload Build Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build
 
-    - name: Build package
-      id: build-package
-      run: npm run build
-      env:
-        BASE_PATH: /
-        URL: https://betaflight.com
-        ORG: betaflight
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
 
-    - name: Deploy to AWS S3
-      uses: jakejarvis/s3-sync-action@master
-      with:
-        args: --acl public-read --follow-symlinks --delete
-      env:
-        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: us-east-1
-        SOURCE_DIR: ./build
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write # to deploy to Pages
+      id-token: write # to verify the deployment originates from an appropriate source
 
-    - name: Invalidate CloudFront cache
-      uses: chetan/invalidate-cloudfront-action@master
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: us-east-1
-        DISTRIBUTION: ${{ secrets.AWS_CF_DISTRIBUTION_ID }}
-        PATHS: "/*"
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

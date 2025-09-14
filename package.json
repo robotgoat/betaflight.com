@@ -1,5 +1,5 @@
 {
-  "name": "docs",
+  "name": "betaflight",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -12,63 +12,22 @@
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc",
-    "lint": "eslint --ext .js,.tsx src",
-    "lint:fix": "eslint --ext .js,.tsx --fix src",
-    "format": "prettier --write src",
-    "check": "node tools/check_title_case.mjs && node tools/check_file_names.mjs",
-    "prepare": "husky install",
-    "check:title-case": "node tools/check_title_case.mjs",
-    "check:file-names": "node tools/check_file_names.mjs"
+    "typecheck": "tsc"
   },
   "dependencies": {
-    "@docusaurus/core": "3.0.1",
-    "@docusaurus/preset-classic": "3.0.1",
-    "@docusaurus/theme-mermaid": "^3.0.1",
-    "@fortawesome/fontawesome-svg-core": "^6.2.1",
-    "@fortawesome/free-brands-svg-icons": "^6.2.1",
-    "@fortawesome/free-solid-svg-icons": "^6.2.1",
-    "@fortawesome/react-fontawesome": "^0.2.0",
-    "@heroicons/react": "^2.0.13",
+    "@docusaurus/core": "3.8.1",
+    "@docusaurus/preset-classic": "3.8.1",
     "@mdx-js/react": "^3.0.0",
-    "@nivo/core": "^0.84.0",
-    "@nivo/line": "^0.84.0",
-    "classnames": "^2.3.2",
-    "clsx": "^1.2.1",
-    "docusaurus-lunr-search": "^3.3.1",
-    "docusaurus-plugin-sass": "^0.2.2",
-    "hast-util-is-element": "^1.1.0",
-    "lucide-react": "^0.414.0",
+    "clsx": "^2.0.0",
     "prism-react-renderer": "^2.3.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-responsive": "^9.0.2",
-    "react-slugify": "^3.0.0",
-    "react-snap-carousel": "^0.0.3",
-    "react-youtube": "^10.1.0",
-    "rehype-katex": "^7.0.0",
-    "remark-math": "^6.0.0",
-    "remark-mentions": "^1.1.0",
-    "sass": "^1.57.1",
-    "semver": "^7.5.4"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.0.1",
-    "@tsconfig/docusaurus": "^1.0.5",
-    "@types/dompurify": "^3.0.5",
-    "@typescript-eslint/eslint-plugin": "^5.48.1",
-    "@typescript-eslint/parser": "^5.48.1",
-    "chalk": "^5.2.0",
-    "dotenv": "^16.0.3",
-    "eslint": "^8.24.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-config-react-app": "^7.0.1",
-    "husky": "^8.0.2",
-    "prettier": "2.8.1",
-    "simple-git": "^3.16.0",
-    "tailwindcss": "^3.2.4",
-    "title-case": "^3.0.3",
-    "typescript": "^4.7.4"
+    "@docusaurus/module-type-aliases": "3.8.1",
+    "@docusaurus/tsconfig": "3.8.1",
+    "@docusaurus/types": "3.8.1",
+    "typescript": "~5.6.2"
   },
   "browserslist": {
     "production": [
@@ -77,12 +36,12 @@
       "not op_mini all"
     ],
     "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
     ]
   },
   "engines": {
-    "node": ">=20.10"
+    "node": ">=18.0"
   }
 }
