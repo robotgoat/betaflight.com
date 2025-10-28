@@ -28,17 +28,23 @@ function HomepageHeader() {
     //     </div>
     //   </div>
     // </header>
+    <header className={styles.heroBanner}>
     <div className={styles.background}>
       <ThemedImage
         alt="Betaflight logo"
         // className='h-fit w-fit xl:mr-12 col col--4 margin-top--xl'
-        className='margin-top--xl'
+        className='margin-top--l'
         sources={{
           light: useBaseUrl('/img/betaflight/logo_light.svg'),
           dark: useBaseUrl('/img/betaflight/logo_dark.svg')
         }}
         />
+      <div className={clsx('card', styles.customCard)}>
+      dgfsddg
     </div>
+    </div>
+
+    </header>
   );
 }
 
